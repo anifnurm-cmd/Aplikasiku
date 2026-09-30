@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Web Saya</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Menghilangkan scrollbar pada body agar iframe tampil penuh */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans flex flex-col h-screen">
+
+  <!-- Loading Overlay -->
+  <div id="loading" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-50 transition-opacity duration-500">
+    <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    <p class="mt-4 text-gray-600 font-medium animate-pulse">Memuat aplikasi...</p>
+  </div>
+
+  <!-- Container iFrame Fullscreen -->
+  <main class="flex-grow w-full h-full relative">
+    <iframe 
+      id="app-iframe"
+      src="https://script.google.com/macros/s/AKfycbxkfBFAV83MFGHbNI3U_rJ7L-oMZBWTfPnc2OPNkpB2WkuK1wtNkn-5T2ljn-M_pzw94Q/exec"
+      class="w-full h-full border-0"
+      allow="geolocation; microphone; camera; midi; encrypted-media; clipboard-write; web-share"
+      sandbox="allow-forms allow-modals allow-popups-to-escape-sandbox allow-popups allow-scripts allow-same-origin"
+      onload="hideLoading()"
+    ></iframe>
+  </main>
+
+  <script>
+    function hideLoading() {
+      const loadingScreen = document.getElementById('loading');
+      if (loadingScreen) {
+        loadingScreen.classList.add('opacity-0');
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+        }, 500);
+      }
+    }
+
+    // Safety fallback: Sembunyikan loading secara otomatis setelah 8 detik jika event onload terlambat
+    setTimeout(hideLoading, 8000);
+  </script>
+</body>
+</html>
