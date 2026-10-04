@@ -2,55 +2,96 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aplikasi Web Saya</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SocioFriend — Connect • Understand • Grow</title>
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3884/3884851.png">
   <style>
-    /* Menghilangkan scrollbar pada body agar iframe tampil penuh */
-    body, html {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      height: 100%;
+    }
+    html, body {
       width: 100%;
+      height: 100%;
       overflow: hidden;
+      background-color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    /* Top Bar Utility untuk Bypass Restriksi Cross-Origin Browser */
+    #top-bar {
+      height: 38px;
+      background-color: #0f766e;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      position: relative;
+    }
+    #top-bar .title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #top-bar .title img {
+      width: 18px;
+      height: 18px;
+    }
+    #top-bar a.open-btn {
+      background-color: #f59e0b;
+      color: #0f172a;
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      transition: background-color 0.2s ease;
+    }
+    #top-bar a.open-btn:hover {
+      background-color: #d97706;
+      color: #ffffff;
+    }
+    /* Frame Wrapper */
+    #app-container {
+      width: 100%;
+      height: calc(100% - 38px);
+      position: relative;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
     }
   </style>
 </head>
-<body class="bg-gray-100 font-sans flex flex-col h-screen">
+<body>
 
-  <!-- Loading Overlay -->
-  <div id="loading" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-50 transition-opacity duration-500">
-    <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-    <p class="mt-4 text-gray-600 font-medium animate-pulse">Memuat aplikasi...</p>
+  <!-- TOP BAR UTILITY -->
+  <div id="top-bar">
+    <div class="title">
+      <img src="https://cdn-icons-png.flaticon.com/512/3884/3884851.png" alt="SocioFriend Logo">
+      <span>SocioFriend E-Sosiometri</span>
+    </div>
+    <a href="https://script.google.com/macros/s/AKfycbyPEhcAesbgdwsxMFQv7a8bu-tBIeWliZ691x8YKC1rZufc-_CLtGF2x4aEUIRp9eh0Hg/exec" target="_blank" class="open-btn">
+      ↗ Buka Mode Penuh (Jika Unduhan Terhalang)
+    </a>
   </div>
 
-  <!-- Container iFrame Fullscreen -->
-  <main class="flex-grow w-full h-full relative">
+  <!-- CONTAINER IFRAME LENGKAP ATRIBUT IZIN SANDBOX -->
+  <div id="app-container">
     <iframe 
-      id="app-iframe"
+      id="sociofriend-frame"
       src="https://script.google.com/macros/s/AKfycbyPEhcAesbgdwsxMFQv7a8bu-tBIeWliZ691x8YKC1rZufc-_CLtGF2x4aEUIRp9eh0Hg/exec"
-      class="w-full h-full border-0"
-      allow="geolocation; microphone; camera; midi; encrypted-media; clipboard-write; web-share"
-      sandbox="allow-forms allow-modals allow-popups-to-escape-sandbox allow-popups allow-scripts allow-same-origin"
-      onload="hideLoading()"
-      sandbox="allow-downloads allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
-    ></iframe>
-  </main>
+      allow="downloads; autoplay; camera; microphone; clipboard-write"
+      sandbox="allow-downloads allow-downloads-without-user-activation allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-top-navigation">
+    </iframe>
+  </div>
 
-  <script>
-    function hideLoading() {
-      const loadingScreen = document.getElementById('loading');
-      if (loadingScreen) {
-        loadingScreen.classList.add('opacity-0');
-        setTimeout(() => {
-          loadingScreen.style.display = 'none';
-        }, 500);
-      }
-    }
-
-    // Safety fallback: Sembunyikan loading secara otomatis setelah 8 detik jika event onload terlambat
-    setTimeout(hideLoading, 8000);
-  </script>
 </body>
 </html>
